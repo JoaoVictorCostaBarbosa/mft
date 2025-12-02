@@ -1,0 +1,15 @@
+/target/
+
+**/*.rs.bk
+
+*.pdb
+
+.env
+.env.*
+!.env.example
+
+sqlx-data.json
+
+.idea/
+.vscode/
+*.iml
