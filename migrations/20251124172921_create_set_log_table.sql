@@ -5,8 +5,8 @@ CREATE TABLE "set_log" (
   "exercise_log_id" uuid NOT NULL,
   "type" set_type_enum NOT NULL,
   "weight" decimal(5,2) NOT NULL,
-  "created_at" timestamp DEFAULT current_timestamp,
-  "deleted_at" timestamp,
+  "created_at" timestamptz DEFAULT current_timestamp,
+  "deleted_at" timestamptz,
 
   FOREIGN KEY ("exercise_log_id") REFERENCES "exercise_log" ("id") ON UPDATE CASCADE
 );

@@ -7,7 +7,7 @@ CREATE TABLE "users" (
   "password" text NOT NULL,
   "role" role_enum NOT NULL,
   "url_img" text,
-  "created_at" timestamp DEFAULT current_timestamp,
-  "updated_at" timestamp,
-  "deleted_at" timestamp
+  "created_at" timestamptz DEFAULT current_timestamp,
+  "updated_at" timestamptz,
+  "deleted_at" timestamptz
 );

@@ -17,8 +17,8 @@ CREATE TABLE "measurements" (
   "right_arm" decimal(5,1),
   "left_forearm" decimal(5,1),
   "right_forearm" decimal(5,1),
-  "created_at" timestamp DEFAULT current_timestamp,
-  "deleted_at" timestamp,
+  "created_at" timestamptz DEFAULT current_timestamp,
+  "deleted_at" timestamptz,
 
   FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON UPDATE CASCADE
 );
