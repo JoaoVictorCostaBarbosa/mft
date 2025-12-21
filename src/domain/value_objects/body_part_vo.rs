@@ -26,4 +26,8 @@ impl BodyPartMeasure {
 
         Ok(Self(value))
     }
+
+    pub fn value(&self) -> f32 {
+        self.0
+    }
 }
