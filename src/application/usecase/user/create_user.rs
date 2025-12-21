@@ -1,17 +1,15 @@
-use crate::{
-    application::{
-        dtos::user::{pending_user::PendingUser, user_create::UserCreate},
-        interfaces::pending_user_repository::PendingUserRepository,
-    },
-    domain::{
-        entities::user::User,
-        errors::{
-            domain_error::DomainError, repository_error::RepositoryError, user_error::UserError,
-        },
-        repositories::user_repository::UserRepository,
-        services::{cripto::CriptoService, smtp::SmtpService},
-        value_objects::{email_vo::Email, name_vo::Name, password_vo::Password},
-    },
+use crate::application::{
+    dtos::user::{pending_user::PendingUser, user_create::UserCreate},
+    interfaces::pending_user_repository::PendingUserRepository,
+};
+use crate::domain::errors::{
+    domain_error::DomainError, repository_error::RepositoryError, user_error::UserError,
+};
+use crate::domain::{
+    entities::user::User,
+    repositories::user_repository::UserRepository,
+    services::{cripto::CriptoService, smtp::SmtpService},
+    value_objects::{email_vo::Email, name_vo::Name, password_vo::Password},
 };
 use chrono::Utc;
 use rand::{Rng, thread_rng};
@@ -44,7 +42,7 @@ impl CreateUser {
         let email = Email::new(user_data.email).map_err(UserError::from)?;
         let name = Name::new(user_data.name).map_err(UserError::from)?;
         let password = Password::new(user_data.password).map_err(UserError::from)?;
-        
+
         let existing_user: Result<User, DomainError> =
             self.user_repo.get_user_by_email(email.value()).await;
 
@@ -67,8 +65,8 @@ impl CreateUser {
             Ok(user) => {
                 if user.limit_date > Utc::now() {
                     return Err(DomainError::Repository(RepositoryError::Conflict(
-                            "Verification already sent".into()
-                        )));
+                        "Verification already sent".into(),
+                    )));
                 }
 
                 self.pending_user_repo.delete_pending_user(user.id).await?;
