@@ -7,13 +7,9 @@ use crate::{
         interfaces::pending_change_repository::PendingChangesRepository,
     },
     domain::{
-        entities::user::User,
-        enums::role::Role,
-        errors::{
+        commands::user_commands::UserUpdateFilds, entities::user::User, enums::role::Role, errors::{
             domain_error::DomainError, permission_error::PermissionError, user_error::UserError,
-        },
-        repositories::user_repository::UserRepository,
-        value_objects::{email_vo::Email, user_update::UserUpdateFilds},
+        }, repositories::user_repository::UserRepository, value_objects::email_vo::Email
     },
 };
 use std::sync::Arc;
