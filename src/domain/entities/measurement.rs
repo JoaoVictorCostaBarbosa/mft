@@ -8,7 +8,7 @@ use crate::domain::{
     },
 };
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Measurement {
     pub id: Uuid,
     pub user_id: Uuid,
