@@ -1,6 +1,6 @@
 use crate::domain::{
-    entities::user::User, errors::domain_error::DomainError,
-    value_objects::user_update::UserUpdateFilds,
+    commands::user_commands::UserUpdateFilds, entities::user::User,
+    errors::domain_error::DomainError,
 };
 use axum::async_trait;
 use uuid::Uuid;
