@@ -1,5 +1,8 @@
 use crate::domain::errors::{
-    bucket_error::BucketError, cripto_error::CriptoError, file_error::FileError, jwt_error::JwtError, permission_error::PermissionError, repository_error::RepositoryError, smtp_error::SmtpError, user_error::UserError
+    bucket_error::BucketError, cripto_error::CriptoError,
+    exercise_error::ExerciseError, file_error::FileError, jwt_error::JwtError,
+    measurement_error::MeasurementError, permission_error::PermissionError,
+    repository_error::RepositoryError, smtp_error::SmtpError, user_error::UserError,
 };
 use thiserror::Error;
 
@@ -8,7 +11,7 @@ pub enum DomainError {
     #[error("repository error: {0}")]
     Repository(#[from] RepositoryError),
 
-    #[error("cryptography error {0}")]
+    #[error("cryptography error: {0}")]
     Cripto(#[from] CriptoError),
 
     #[error("user error: {0}")]
@@ -25,7 +28,13 @@ pub enum DomainError {
 
     #[error("bucker error: {0}")]
     Bucket(#[from] BucketError),
-    
-    #[error("file error {0}")]
+
+    #[error("file error: {0}")]
     File(#[from] FileError),
+
+    #[error("measurement error: {0}")]
+    Measurement(#[from] MeasurementError),
+
+    #[error("exercise error: {0}")]
+    Exercise(#[from] ExerciseError),
 }
