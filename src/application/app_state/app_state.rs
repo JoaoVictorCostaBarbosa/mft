@@ -1,13 +1,18 @@
 use crate::{
     application::{
-        app_state::{auth_app_state::AuthAppState, user_app_state::UserAppState},
+        app_state::{
+            auth_app_state::AuthAppState, measurement_app_state::MeasurementAppState,
+            user_app_state::UserAppState,
+        },
         interfaces::{
             pending_change_repository::PendingChangesRepository,
             pending_user_repository::PendingUserRepository,
         },
     },
     domain::{
-        repositories::user_repository::UserRepository,
+        repositories::{
+            measurement_repository::MeasurementRepository, user_repository::UserRepository,
+        },
         services::{
             bucket_storage::BucketStorage, cripto::CriptoService, jwt::JwtProvider,
             smtp::SmtpService,
@@ -20,6 +25,7 @@ use std::sync::Arc;
 pub struct AppState {
     pub auth: AuthAppState,
     pub user: UserAppState,
+    pub measurement: MeasurementAppState,
     pub jwt_service: Arc<dyn JwtProvider>,
 }
 
@@ -28,6 +34,7 @@ impl AppState {
         user_repo: Arc<dyn UserRepository>,
         pending_user_repo: Arc<dyn PendingUserRepository>,
         pending_change_repo: Arc<dyn PendingChangesRepository>,
+        measurement_repo: Arc<dyn MeasurementRepository>,
         cripto_service: Arc<dyn CriptoService>,
         jwt_service: Arc<dyn JwtProvider>,
         smtp_service: Arc<dyn SmtpService>,
@@ -48,6 +55,7 @@ impl AppState {
                 smtp_service.clone(),
                 bucket_service.clone(),
             ),
+            measurement: MeasurementAppState::new(measurement_repo.clone()),
             jwt_service,
         }
     }
