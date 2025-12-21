@@ -4,6 +4,7 @@ use crate::{
         interfaces::pending_change_repository::PendingChangesRepository,
     },
     domain::{
+        commands::user_commands::UserUpdateFilds,
         entities::user::User,
         enums::role::Role,
         errors::{
@@ -11,7 +12,7 @@ use crate::{
         },
         repositories::user_repository::UserRepository,
         services::cripto::CriptoService,
-        value_objects::{password_vo::Password, user_update::UserUpdateFilds},
+        value_objects::password_vo::Password,
     },
 };
 use std::sync::Arc;
