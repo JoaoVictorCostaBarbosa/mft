@@ -18,7 +18,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push
+      - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -31,29 +31,22 @@ jobs:
     steps:
       - name: Install Cloudflared
         run: |
-          sudo curl -L --output /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
-          sudo chmod +x /usr/local/bin/cloudflared
-  
-      - name: Configure SSH for Cloudflare Tunnel
+          curl -L --output /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x /usr/local/bin/cloudflared
+
+      - name: Start Cloudflare SSH Tunnel
         run: |
-          mkdir -p ~/.ssh
-          echo "Host ${{ secrets.SSH_HOST }}" >> ~/.ssh/config
-          echo "  ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
-          chmod 600 ~/.ssh/config
-  
+          cloudflared access ssh --hostname ${{ secrets.SSH_HOST }} &
+          sleep 5  # espera o túnel iniciar
+
       - name: SSH Deploy
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             cd ~/myFitTracker/infra-v1
             git pull origin main
             docker compose pull
             ./scripts/down.sh
-            if [ "${{ github.event.repository.name }}" == "mft-back" ]; then
+            if [ "${GITHUB_REPOSITORY##*/}" == "mft-back" ]; then
               docker compose run --rm migration
             fi
             ./scripts/up.sh
-
