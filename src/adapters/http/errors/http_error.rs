@@ -82,7 +82,7 @@ impl IntoResponse for HttpError {
                 Json(json!({ "error": err.to_string() })),
             )
                 .into_response(),
-            
+
             // ========================
             // EXERCISE ERRORS
             // ========================
@@ -90,8 +90,8 @@ impl IntoResponse for HttpError {
                 StatusCode::UNPROCESSABLE_ENTITY,
                 Json(json!({ "error": err.to_string() })),
             )
-            .into_response(),
-            
+                .into_response(),
+
             // ========================
             // JWT ERRORS
             // ========================
@@ -112,7 +112,7 @@ impl IntoResponse for HttpError {
                 ),
 
                 JwtError::MissingClaim => (
-                    StatusCode::BAD_REQUEST,
+                    StatusCode::UNAUTHORIZED,
                     Json(json!({ "error": "missing claim" })),
                 ),
 
@@ -175,11 +175,10 @@ impl IntoResponse for HttpError {
                 ),
             }
             .into_response(),
-
             // ========================
             // CATCH-ALL
             // ========================
-            
+
             /*
             _ => (
                 StatusCode::INTERNAL_SERVER_ERROR,
