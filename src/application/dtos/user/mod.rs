@@ -1,10 +1,4 @@
-pub mod auth_reponse;
 pub mod email_change_request;
-pub mod login_request;
 pub mod password_change_request;
 pub mod pending_change;
-pub mod pending_user;
 pub mod update_user_request;
-pub mod user_create;
-pub mod user_response;
-pub mod verify_request;

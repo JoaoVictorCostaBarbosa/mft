@@ -56,3 +56,14 @@ pub struct UpdatePasswordDTO {
     pub password: String,
     pub code: i32,
 }
+
+#[derive(Debug, Deserialize, ToSchema)]
+pub struct RefreshRequestDTO {
+    pub refresh_token: String,
+}
+
+#[derive(Debug, Serialize, ToSchema)]
+pub struct RefreshResponseDTO {
+    pub access: String,
+    pub refresh: String,
+}

@@ -6,6 +6,6 @@ pub enum ExerciseError {
     #[error("invalid name: {0}")]
     NameInvalid(#[from] NameError),
 
-    #[error("invalid search criteria")]
-    InvalidSearchCriteria,
+    #[error("invalid filds criteria")]
+    InvalidFieldsCriteria,
 }

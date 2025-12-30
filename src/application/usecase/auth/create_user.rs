@@ -1,6 +1,7 @@
 use crate::application::{
-    dtos::user::{pending_user::PendingUser, user_create::UserCreate},
+    dtos::auth::user_create::UserCreate,
     interfaces::pending_user_repository::PendingUserRepository,
+    resources::pending_user::PendingUser,
 };
 use crate::domain::errors::{
     domain_error::DomainError, repository_error::RepositoryError, user_error::UserError,
