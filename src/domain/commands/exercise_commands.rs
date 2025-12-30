@@ -5,6 +5,7 @@ use uuid::Uuid;
 
 #[derive(Debug, Default)]
 pub struct ExerciseUpdateFields {
+    pub id: Uuid,
     pub name: Option<String>,
     pub exercise_type: Option<ExerciseType>,
     pub equipment: Option<Equipment>,
@@ -18,4 +19,17 @@ pub struct ExerciseFilterFields {
     pub equipment: Option<Equipment>,
     pub exercise_type: Option<ExerciseType>,
     pub muscle_group: Option<MuscleGroup>,
+}
+
+impl ExerciseUpdateFields {
+    pub fn is_empty(&self) -> bool {
+        if self.name.is_none()
+            && self.equipment.is_none()
+            && self.muscle_group.is_none()
+            && self.exercise_type.is_none()
+        {
+            return true;
+        }
+        false
+    }
 }
